@@ -1,169 +1,109 @@
 #!/usr/bin/python3
-"""
-    Module containing functions to search for solutions to N-queens problem.
-"""
+"""Defines a Rectangle class."""
 
 
-def all_possible(n=4):
-    """ Function to find all possible solutions by placing the first queen on
-        the first row, with different column positions starting from 2nd
-        column to 2nd to last column.
+class Rectangle:
+    """Represent a rectangle.
+    Attributes:
+        number_of_instances (int): The number of Rectangle instances.
+        print_symbol (any): The symbol used for string representation.
+    """
+
+    number_of_instances = 0
+    print_symbol = "#"
+
+    def __init__(self, width=0, height=0):
+        """Initialize a new Rectangle.
         Args:
-            n (int): The size of the chess board, but also the number of queens
-                to place on the board.
-    """
+            width (int): The width of the new rectangle.
+            height (int): The height of the new rectangle.
+        """
+        type(self).number_of_instances += 1
+        self.width = width
+        self.height = height
 
-    for i in range(n):
-        matrix = []
-        matrix.append([0, i])
-        col = [z for z in range(n)]
-        col.remove(i)
-        recur_bt(matrix, 1, col, n)
+    @property
+    def width(self):
+        """Get/set the width of the Rectangle."""
+        return self.__width
 
+    @width.setter
+    def width(self, value):
+        if not isinstance(value, int):
+            raise TypeError("width must be an integer")
+        if value < 0:
+            raise ValueError("width must be >= 0")
+        self.__width = value
 
-def recur_bt(matrix, row, col, n):
-    """
-        Recursive backtrack function. Test remaining possible positions using
-        `row` and `col` values in order to place another queen on the board.
-        Base case, either the length of `matrix` is the same as `n` (all queens
-        have been placed in non threatening positions) or all possible
-        combinations of `row` and `col` with the current matrix yields no
-        solution.
+    @property
+    def height(self):
+        """Get/set the height of the Rectangle."""
+        return self.__height
+
+    @height.setter
+    def height(self, value):
+        if not isinstance(value, int):
+            raise TypeError("height must be an integer")
+        if value < 0:
+            raise ValueError("height must be >= 0")
+        self.__height = value
+
+    def area(self):
+        """Return the area of the Rectangle."""
+        return (self.__width * self.__height)
+
+    def perimeter(self):
+        """Return the perimeter of the Rectangle."""
+        if self.__width == 0 or self.__height == 0:
+            return (0)
+        return ((self.__width * 2) + (self.__height * 2))
+
+    @staticmethod
+    def bigger_or_equal(rect_1, rect_2):
+        """Return the Rectangle with the greater area.
         Args:
-            matrix (:obj:`list` of :obj:`list` or int): A matrix list of lists
-                representing the positions of queens placed on the board.
-            row (:obj:`list` of int): Possible row positions the remaining
-                queens can be placed on.
-            col (:obj:`list` of int): Possible column positions the remaining
-                queens can be placed on.
-            n (int): The size of the board, but also the number of queens that
-                can fit.
-        Returns:
-            A list of lists which is a solution, or None if the current members
-            of the matrix lead to a dead end.
-    """
-    if len(matrix) is n:
-        return matrix
+            rect_1 (Rectangle): The first Rectangle.
+            rect_2 (Rectangle): The second Rectangle.
+        Raises:
+            TypeError: If either of rect_1 or rect_2 is not a Rectangle.
+        """
+        if not isinstance(rect_1, Rectangle):
+            raise TypeError("rect_1 must be an instance of Rectangle")
+        if not isinstance(rect_2, Rectangle):
+        if rect_1.area() >= rect_2.area():
+            raise TypeError("rect_2 must be an instance of Rectangle")
+            return (rect_1)
+        return (rect_2)
 
-    if row:
-        i = row
-        for j in col:
-                if (not bot_right(matrix, i + 1, j + 1, n) or
-                    not bot_left(matrix, i + 1, j - 1, n) or
-                    not top_left(matrix, i - 1, j - 1, n) or
-                        not top_right(matrix, i - 1, j + 1, n)):
-                        continue
-                matrix.append([i, j])
-                new_col = list(col)
-                new_col.remove(j)
-                new_matrix = recur_bt(matrix, row + 1, new_col, n)
-                if new_matrix is not None:
-                    print(matrix)
-                matrix.remove([i, j])
-    return None
-
-
-def bot_right(matrix, y, x, n):
-    """
-        Function to test if there are any queens on the bottom right diagonal.
+    @classmethod
+    def square(cls, size=0):
+        """Return a new Rectangle with width and height equal to size.
         Args:
-            matrix (:obj:`list` of :obj:`list` or int): A matrix list of lists
-                representing the positions of queens placed on the board.
-            y (int): "row" or y co-ordinate.
-                queens can be placed on.
-            x (int): "column" or x co-ordinate.
-            n (int): The size of the board.
-        Returns:
-            True if no queens exist on the bottom right diagonal otherwise
-            False.
-    """
-    while y < n and x < n:
-        if [y, x] in matrix:
-            return False
-        else:
-            y += 1
-            x += 1
-    return True
-                representing the positions of queens placed on the board.
-            y (int): "row" or y co-ordinate.
+            size (int): The width and height of the new Rectangle.
+        """
+        return (cls(size, size))
 
-def bot_left(matrix, y, x, n):
+    def __str__(self):
+        """Return the printable representation of the Rectangle.
+        Represents the rectangle with the # character.
+        """
+        if self.__width == 0 or self.__height == 0:
+            return ("")
 
-    """
-        Function to test if there are any queens on the bottom left diagonal.
-        Args:
-            matrix (:obj:`list` of :obj:`list` or int): A matrix list of lists
-                queens can be placed on.
-            x (int): "column" or x co-ordinate.
-            n (int): The size of the board.
-        Returns:
-            True if no queens exist on the bottom left diagonal otherwise
-            False.
-    """
-    while y < n and x >= 0:
-        if [y, x] in matrix:
-            return False
-        else:
-            y += 1
-            x -= 1
-    return True
+        rect = []
+        for i in range(self.__height):
+            [rect.append(str(self.print_symbol)) for j in range(self.__width)]
+            if i != self.__height - 1:
+                rect.append("\n")
+        return ("".join(rect))
 
+    def __repr__(self):
+        """Return the string representation of the Rectangle."""
+        rect = "Rectangle(" + str(self.__width)
+        rect += ", " + str(self.__height) + ")"
+        return (rect)
 
-def top_left(matrix, y, x, n):
-    """
-        Function to test if there are any queens on the top left diagonal.
-        Args:
-            matrix (:obj:`list` of :obj:`list` or int): A matrix list of lists
-                representing the positions of queens placed on the board.
-            y (int): "row" or y co-ordinate.
-                queens can be placed on.
-            x (int): "column" or x co-ordinate.
-            n (int): The size of the board.
-        Returns:
-            True if no queens exist on the top left diagonal otherwise False.
-    """
-    while y >= 0 and x >= 0:
-        if [y, x] in matrix:
-            return False
-        else:
-            y -= 1
-            x -= 1
-    return True
-
-
-def top_right(matrix, y, x, n):
-    """
-        Function to test if there are any queens on the top right diagonal.
-        Args:
-            matrix (:obj:`list` of :obj:`list` or int): A matrix list of lists
-                representing the positions of queens placed on the board.
-            y (int): "row" or y co-ordinate.
-                queens can be placed on.
-            x (int): "column" or x co-ordinate.
-            n (int): The size of the board.
-        Returns:
-            True if no queens exist on the top right diagonal otherwise False.
-    """
-    while y >= 0 and x < n:
-        if [y, x] in matrix:
-            return False
-        else:
-            y -= 1
-            x += 1
-    return True
-
-if __name__ == "__main__":
-    from sys import argv
-    if len(argv) is not 2:
-        print("Usage: nqueens N")
-        exit(1)
-    try:
-        n = int(argv[1])
-    except:
-        print("N must be a number")
-        exit(1)
-
-    if n < 4:
-        print("N must be at least 4")
-        exit(1)
-    all_possible(n)
+    def __del__(self):
+        """Print a message for every deletion of a Rectangle."""
+        type(self).number_of_instances -= 1
+        print("Bye rectangle...")
