@@ -35,7 +35,7 @@ class Rectangle:
             raise ValueError("width must be >= 0")
         self.__width = value
 
-    @property
+@property
     def height(self):
         """Get/set the height of the Rectangle."""
         return self.__height
@@ -58,7 +58,7 @@ class Rectangle:
             return (0)
         return ((self.__width * 2) + (self.__height * 2))
 
-    @staticmethod
+@staticmethod
     def bigger_or_equal(rect_1, rect_2):
         """Return the Rectangle with the greater area.
         Args:
@@ -83,7 +83,7 @@ class Rectangle:
         """
         return (cls(size, size))
 
-        def __str__(self):
+def __str__(self):
         """Return the printable representation of the Rectangle.
         Represents the rectangle with the # character.
         """
