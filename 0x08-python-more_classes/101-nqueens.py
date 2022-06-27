@@ -1,4 +1,12 @@
-ard (list): A list of lists representing the chessboard.
+#!/usr/bin/python3
+"""Solves the N-queens puzzle.
+Determines all possible solutions to placing N
+N non-attacking queens on an NxN chessboard.
+Example:
+    $ ./101-nqueens.py N
+N must be an integer greater than or equal to 4.
+Attributes:
+    board (list): A list of lists representing the chessboard.
     solutions (list): A list of lists containing solutions.
 Solutions are represented in the format [[r, c], [r, c], [r, c], [r, c]]
 where `r` and `c` represent the row and column, respectively, where a
@@ -6,32 +14,6 @@ queen must be placed on the chessboard.
 """
 import sys
 
-
-def xout(board, row, col):
-    """X out spots on a chessboard.
-    All spots where non-attacking queens can no
-    longer be played are X-ed out.
-    Args:
-        board (list): The current working chessboard.
-        row (int): The row where a queen was last played.
-        col (int): The column where a queen was last played.
-    """
-    # X out all forward spots
-    for c in range(col + 1, len(board)):
-        board[row][c] = "x"
-    # X out all backwards spots
-    for c in range(col - 1, -1, -1):
-        board[row][c] = "x"
-    # X out all spots below
-    for r in range(row + 1, len(board)):
-        board[r][col] = "x"
-    # X ou 4")
-        sys.exit(1)
-
-    board = init_board(int(sys.argv[1]))
-    solutions = recursive_solve(board, 0, 0, [])
-    for sol in solutions:
-        print(sol)
 
 def init_board(n):
     """Initialize an `n`x`n` sized chessboard with 0's."""
@@ -57,15 +39,29 @@ def get_solution(board):
                 solution.append([r, c])
                 break
     return (solution)
-#!/usr/bin/python3
-"""Solves the N-queens puzzle.
-Determines all possible solutions to placing N
-N non-attacking queens on an NxN chessboard.
-Example:
-    $ ./101-nqueens.py N
-N must be an integer greater than or equal to 4.
-Attributes:
-    bot all spots above
+
+
+def xout(board, row, col):
+    """X out spots on a chessboard.
+
+
+    All spots where non-attacking queens can no
+    longer be played are X-ed out.
+    Args:
+        board (list): The current working chessboard.
+        row (int): The row where a queen was last played.
+        col (int): The column where a queen was last played.
+    """
+    # X out all forward spots
+    for c in range(col + 1, len(board)):
+        board[row][c] = "x"
+    # X out all backwards spots
+    for c in range(col - 1, -1, -1):
+        board[row][c] = "x"
+    # X out all spots below
+    for r in range(row + 1, len(board)):
+        board[r][col] = "x"
+    # X out all spots above
     for r in range(row - 1, -1, -1):
         board[r][col] = "x"
     # X out all spots diagonally down to the right
@@ -82,7 +78,7 @@ Attributes:
             break
         board[r][c]
         c -= 1
-    # X out all spots diagonally up to the right
+# X out all spots diagonally up to the right
     c = col + 1
     for r in range(row - 1, -1, -1):
         if c >= len(board):
@@ -94,7 +90,7 @@ Attributes:
     for r in range(row + 1, len(board)):
         if c < 0:
             break
-        board[r]int("N must be at least[c] = "x"
+        board[r][c] = "x"
         c -= 1
 
 
@@ -121,7 +117,6 @@ def recursive_solve(board, row, queens, solutions):
                                         queens + 1, solutions)
 
     return (solutions)
-
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
