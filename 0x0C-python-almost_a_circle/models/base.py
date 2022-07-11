@@ -47,9 +47,7 @@ class Base:
         if not json_string:
             return []
         return json.loads(json_string)
-        new.update(**dictionary)
-        return new
-
+        
 
     @classmethod
     def create(cls, **dictionary):
@@ -58,6 +56,9 @@ class Base:
             new = cls(10, 10)
         else:
             new = cls(10)
+        new.update(**dictionary)
+        return new
+    
     @classmethod
     def load_from_file(cls):
         """ Returns a list of instances """
@@ -114,11 +115,11 @@ class Base:
         with open(filename, 'r') as readFile:
             reader = csv.reader(readFile)
             csv_list = list(reader)
-
+        
+        if cls.__name__ == "Rectangle":
             list_keys = ['id', 'width', 'height', 'x', 'y']
         else:
             list_keys = ['id', 'size', 'x', 'y']
-        if cls.__name__ == "Rectangle":
 
         matrix = []
 
