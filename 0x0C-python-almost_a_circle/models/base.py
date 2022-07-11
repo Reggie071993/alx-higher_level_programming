@@ -36,9 +36,9 @@ class Base:
             for i in range(len(list_objs)):
                 list_dic.append(list_objs[i].to_dictionary())
 
-        with open(filename, 'w') as f:
         lists = cls.to_json_string(list_dic)
 
+        with open(filename, 'w') as f:
             f.write(lists)
 
     @staticmethod
@@ -47,6 +47,9 @@ class Base:
         if not json_string:
             return []
         return json.loads(json_string)
+        new.update(**dictionary)
+        return new
+
 
     @classmethod
     def create(cls, **dictionary):
@@ -55,9 +58,6 @@ class Base:
             new = cls(10, 10)
         else:
             new = cls(10)
-        new.update(**dictionary)
-        return new
-
     @classmethod
     def load_from_file(cls):
         """ Returns a list of instances """
@@ -115,10 +115,10 @@ class Base:
             reader = csv.reader(readFile)
             csv_list = list(reader)
 
-        if cls.__name__ == "Rectangle":
             list_keys = ['id', 'width', 'height', 'x', 'y']
         else:
             list_keys = ['id', 'size', 'x', 'y']
+        if cls.__name__ == "Rectangle":
 
         matrix = []
 
