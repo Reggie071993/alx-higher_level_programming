@@ -1,8 +1,8 @@
+"""
 #!/usr/bin/python3
 """
 Defines a state model that contain the class definition
  of a City and an instance Base = declarative_base()
-"""
 from lib2to3.pytree import Base
 from sre_parse import State
 from unicodedata import name
@@ -12,11 +12,11 @@ from sqlalchemy.ext.declarative import declarative_base
 Base = declarative_base()
 
 
-class City(Base):
-    """
     inherits from Base (imported from model_state)
     links to the MySQL table cities
     class attribute id that represents a column of
+class City(Base):
+    """
     an auto-generated, unique integer, can't be null and is a primary key
     class attribute name that represents a column
     of a string of 128 characters and can't be null
