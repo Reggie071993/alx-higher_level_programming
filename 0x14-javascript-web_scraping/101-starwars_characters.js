@@ -1,15 +1,9 @@
 #!/usr/bin/node
-/**
-  request GET to the second argument
-  and print every characters from this movie
-  but in order
-  process.argv[2] = the id of the movie
-**/
-
 const request = require('request');
 const options = {
   url: 'https://swapi-api.hbtn.io/api/films/' + process.argv[2],
-};  method: 'GET'
+  method: 'GET'
+};
 
 function getNameCharacter (url) {
   return new Promise((resolve, reject) => {
